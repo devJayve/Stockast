@@ -1,6 +1,14 @@
 import { Outlet, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../store/authSlice';
 
 function Layout() {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <div>
       <nav>
@@ -14,6 +22,7 @@ function Layout() {
 
       <footer>
         <p>Footer Content</p>
+        <button onClick={handleLogout}>로그아웃</button>
       </footer>
     </div>
   );
