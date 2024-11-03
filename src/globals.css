@@ -19,7 +19,8 @@
 
     --color-white: #ffffff;
     --color-black: #111111;
-    --color-red: #e52528;
+    --color-red: #da3334;
+    --color-blue: #3e6ff5;
 
     --box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
@@ -46,7 +47,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-    color: var(--color-primary);
     text-decoration: none;
     @apply hover:text-blue-300;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none; /* IE, Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
