@@ -5,7 +5,7 @@ const app = express();
 const PORT = 8080;
 
 app.get('/', (req, res) => {
-    res.send('/ : test');
+    res.send('/ : 안녕하세요');
 })
 
 app.listen(PORT, () => {
