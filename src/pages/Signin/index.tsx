@@ -1,29 +1,13 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../store/authSlice';
-import { Navigate } from 'react-router-dom';
-import { RootState } from '../../store';
+import GoogleSignInButton from '../../components/buttons/GoogleSignInButton';
 
 const Signin = () => {
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
-
-  const handleLogin = () => {
-    dispatch(login());
-  };
-
-  if (isAuthenticated) {
-    return <Navigate to='/' replace />;
-  }
-
   return (
-    <div>
-      <h3>Stockasting</h3>
-      <button className='bg-blue-900 text-white' onClick={handleLogin}>
-        로그인하기
-      </button>
+    <div className='flex h-screen flex-col items-center justify-center'>
+      <div className='m-20'>
+        <img src='/images/logo.png' alt='logo' width='400px' />
+        <div className='h-0.5 w-full bg-white opacity-70'></div>
+      </div>
+      <GoogleSignInButton />
     </div>
   );
 };

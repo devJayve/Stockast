@@ -1,27 +1,27 @@
 import { Outlet, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logout } from '../store/authSlice';
+import { signOutWithGoogle } from '../services/AuthService';
 
 function Layout() {
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleLogout = async () => {
+    await signOutWithGoogle();
   };
 
   return (
     <div>
-      <nav>
-        <Link to='/'>Home</Link>
-        <Link to='/account'>계좌 정보</Link>
+      <nav className='flex items-center justify-between p-4'>
+        <img src='/images/logo.png' width='80px' />
+        <div className='flex space-x-6'>
+          <Link to='/'>홈</Link>
+          <Link to='/account'>내 계좌</Link>
+        </div>
+        <div></div>
       </nav>
 
       <main>
-        <Outlet /> {/* 자식 경로의 컴포넌트가 여기에 렌더링됨 */}
+        <Outlet />
       </main>
 
       <footer>
-        <p>Footer Content</p>
         <button onClick={handleLogout}>로그아웃</button>
       </footer>
     </div>

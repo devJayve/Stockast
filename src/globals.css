@@ -5,17 +5,19 @@
 :root {
     --font-family: sans-serif;
 
+    /* 다크 모드 색상 */
+    --color-background: #131313;
+    --color-text: #e7e7e7;
+    /*--color-primary: #1f93ff;*/
+
+    /* 공통 색상 */
     --dark-blue: #0a1930;
     --light-blue: #1f93ff;
-
-    --light-gray: #e7e7e7;
     --dark-gray: #767676;
-    --border-gray: #cccccc;
-    --table-border-gray: #eee;
+    --border-gray: #444444;
+    --table-border-gray: #444444;
 
     --color-white: #ffffff;
-    --color-primary: #0074e9;
-
     --color-black: #111111;
     --color-red: #e52528;
 
@@ -34,16 +36,17 @@ html {
 }
 
 body {
-    @apply bg-gray-100 text-gray-900;
+    background-color: var(--color-background);
+    color: var(--color-text);
     font-family: var(--font-family);
 }
 
 h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-gray-800;
+    @apply font-bold text-gray-100;
 }
 
 a {
-    @apply text-blue-500 hover:text-blue-700;
+    color: var(--color-primary);
     text-decoration: none;
-    color: inherit;
+    @apply hover:text-blue-300;
 }
