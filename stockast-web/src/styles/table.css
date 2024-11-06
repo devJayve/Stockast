@@ -1,0 +1,6 @@
+.table-header {
+    @apply border-t border-b border-gray-300 text-lg py-3 text-right;
+}
+
+
+
