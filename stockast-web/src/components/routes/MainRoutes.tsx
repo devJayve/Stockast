@@ -12,28 +12,34 @@ import { auth } from '../../firebase/firebase';
 import { login, logout } from '../../store/authSlice';
 import NotAuthRoute from './NotAuthRoute';
 import Landing from '../../pages/Landing';
+import { verifyToken } from '../../services/AuthService';
+import firebase from 'firebase/compat';
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { uid, displayName, email, photoURL } = user;
-        dispatch(login({ uid, displayName, email, photoURL }));
+    async function checkAuth() {
+      const isValid = await verifyToken();
+      console.log('isValid', isValid);
+      if (isValid) {
+        const test_user = { uid: '', displayName: '', email: '', photoURL: '' };
+
+        dispatch(
+          login({
+            uid: test_user.uid,
+            displayName: test_user.displayName,
+            email: test_user.email,
+            photoURL: test_user.photoURL,
+          })
+        );
       } else {
         dispatch(logout());
       }
-      setIsLoading(false);
-    });
+    }
 
-    return () => unsubscribe();
+    checkAuth();
   }, [dispatch]);
-
-  if (isLoading) {
-    return <Landing />;
-  }
 
   return (
     <Routes>

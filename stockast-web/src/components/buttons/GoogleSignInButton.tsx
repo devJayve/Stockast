@@ -1,8 +1,10 @@
 import { signInWithGoogle } from '../../services/AuthService';
+import {useDispatch} from "react-redux";
 
 const GoogleSignInButton = () => {
+  const dispatch = useDispatch();
   const handleLogin = async () => {
-    await signInWithGoogle();
+    await signInWithGoogle(dispatch);
   };
 
   return (

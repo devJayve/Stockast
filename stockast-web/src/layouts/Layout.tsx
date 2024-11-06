@@ -1,9 +1,11 @@
 import { Outlet, Link } from 'react-router-dom';
 import { signOutWithGoogle } from '../services/AuthService';
+import {useDispatch} from "react-redux";
 
 function Layout() {
+    const dispatch = useDispatch();
   const handleLogout = async () => {
-    await signOutWithGoogle();
+    await signOutWithGoogle(dispatch);
   };
 
   return (
