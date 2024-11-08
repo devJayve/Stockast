@@ -17,6 +17,7 @@ import firebase from 'firebase/compat';
 
 const MainRoutes = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function checkAuth() {
@@ -36,10 +37,15 @@ const MainRoutes = () => {
       } else {
         dispatch(logout());
       }
+      setIsLoading(false);
     }
 
     checkAuth();
   }, [dispatch]);
+
+  if (isLoading) {
+    return <Landing />;
+  }
 
   return (
     <Routes>
