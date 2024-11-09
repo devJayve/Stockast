@@ -1,5 +1,5 @@
 import { signInWithGoogle } from '../../services/AuthService';
-import {useDispatch} from "react-redux";
+import { useDispatch } from 'react-redux';
 
 const GoogleSignInButton = () => {
   const dispatch = useDispatch();

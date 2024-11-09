@@ -20,8 +20,9 @@ const InvestmentList = () => {
 };
 
 const InvestmentTile = () => {
+  const stockId = '123';
   return (
-    <Link to='/stocks'>
+    <Link to={`/stocks/${stockId}`}>
       <li className='flex cursor-pointer justify-between py-1'>
         <div className='flex items-center space-x-2'>
           <img

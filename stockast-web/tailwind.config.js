@@ -7,6 +7,19 @@ module.exports = {
       fontFamily: {
         sans: ['Noto Sans', 'sans-serif'],
       },
+      width: {
+        0.25: '0.0625rem',
+        0.1: '0.025rem',
+      },
+      borderWidth: {
+        0.5: '0.5px',
+        1: '1px',
+      },
+      colors: {
+        neutral: {
+          850: '#1a1a1a',
+        },
+      },
     },
   },
 };
