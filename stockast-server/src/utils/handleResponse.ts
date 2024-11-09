@@ -6,4 +6,4 @@ const handleResponse = (response, res) => {
   return response.result;
 };
 
-module.exports = handleResponse;
+export default handleResponse;
