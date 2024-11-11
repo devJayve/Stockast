@@ -14,8 +14,10 @@ import { verifyToken } from '../../services/AuthService';
 import Stocks from '../../pages/Stocks';
 import NotFound from '../../pages/NotFound';
 import { authUser } from '../../api/userApi';
+import Test from '../../pages/Test';
 
 const MainRoutes = () => {
+  const isDevMode = process.env.NODE_ENV === 'development';
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.user?.isAuth);
   const isLoading = useSelector((state) => state.isLoading);
@@ -36,6 +38,7 @@ const MainRoutes = () => {
       {/* 로그인한 유저만 이동가능한 경로 */}
       <Route element={<AuthRoute isAuth={isAuth} />}>
         <Route element={<Layout />}>
+          {isDevMode && <Route path='/test' element={<Test />} />}
           <Route path='/' element={<Home />} />
           <Route path='/account' element={<Account />} />
           <Route path='/stocks/:stockId' element={<Stocks />} />
