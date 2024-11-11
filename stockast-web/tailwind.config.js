@@ -19,6 +19,9 @@ module.exports = {
         neutral: {
           850: '#1a1a1a',
         },
+        'stock-red': '#da3334',
+        'stock-blue': '#3e6ff5',
+        'stock-green': '#17bb76',
       },
     },
   },
