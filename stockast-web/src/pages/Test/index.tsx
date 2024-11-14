@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import RadioGroup from '../../components/RadioGroup/RadioGroup';
-import { InterfaceTabBarDummy, RadioGroupDummy } from './dummyData';
-import useRadioGroup from '../../hooks/useRadioGroup';
-import InterfaceTabBar from '../../components/InterfaceTabBar/InterfaceTabBar';
-import { TabBarShape } from '../../types/InterfaceTabBar.types';
 import TabBar from '../../components/TabBar';
 import InfoCard from '../../components/InfoCard';
-import { Metric } from '../../types/InfoCard.types';
+import MetricsTable from '../../components/MetricsTable';
+import { tableResponse } from './dummyData';
+import ValueDisplay from '../../components/ValueDisplay/ValueDisplay';
+import {
+  formatCompactNumber,
+  formatCurrency,
+  formatNumberWithComma,
+} from '../../utils/formatUtils';
 
 const Test = () => {
   const [circleTab, setCircleTab] = useState(0);
   const [underlineTab, setUnderlineTab] = useState(0);
   const [interfaceTab, setInterfaceTab] = useState(0);
-  const metric: Metric = {
-    label: '코스닥',
-    value: '729.04',
-  };
 
   return (
     <div className={'flex flex-col gap-4'}>
@@ -53,7 +51,6 @@ const Test = () => {
           />
         </TabBar>
       </div>
-
       <p>주식 지표 컴포넌트</p>
       <div className='flex space-x-2'>
         <InfoCard value={729.04} originalValue={724.38}>
@@ -87,7 +84,6 @@ const Test = () => {
           <InfoCard.Chart />
         </InfoCard>
       </div>
-
       <div>
         <p>주식 계좌 컴포넌트</p>
         <InfoCard value={729.04} originalValue={734.38}>
@@ -101,7 +97,6 @@ const Test = () => {
           <InfoCard.Detail />
         </InfoCard>
       </div>
-
       <div>
         <p>계좌 잔고 컴포넌트</p>
         <InfoCard value={100000} originalValue={null}>
@@ -113,6 +108,54 @@ const Test = () => {
           </InfoCard.Stat>
         </InfoCard>
       </div>
+
+      <p>테이블 컴포넌트</p>
+      <MetricsTable>
+        <MetricsTable.Header>
+          <MetricsTable.Column>{'일자'}</MetricsTable.Column>
+          <MetricsTable.Column>{'종가'}</MetricsTable.Column>
+          <MetricsTable.Column>{'등락률'}</MetricsTable.Column>
+          <MetricsTable.Column>{'거래량(주)'}</MetricsTable.Column>
+          <MetricsTable.Column>{'거래대금'}</MetricsTable.Column>
+          <MetricsTable.Column>{'시가'}</MetricsTable.Column>
+          <MetricsTable.Column>{'고가'}</MetricsTable.Column>
+          <MetricsTable.Column>{'저가'}</MetricsTable.Column>
+        </MetricsTable.Header>
+        <MetricsTable.Body>
+          {tableResponse.map((metric, index) => {
+            const dateString = metric.date.toLocaleDateString('ko-KR');
+            return (
+              <MetricsTable.Row key={index}>
+                <MetricsTable.Cell>{dateString}</MetricsTable.Cell>
+                <MetricsTable.Cell>
+                  {formatCurrency(metric.closePrice)}
+                </MetricsTable.Cell>
+                <MetricsTable.Cell>
+                  <ValueDisplay
+                    value={metric.closePrice}
+                    originValue={metric.openingPrice}
+                  />
+                </MetricsTable.Cell>
+                <MetricsTable.Cell>
+                  {formatNumberWithComma(metric.volume)}
+                </MetricsTable.Cell>
+                <MetricsTable.Cell>
+                  {formatCompactNumber(metric.transactionAmount)}
+                </MetricsTable.Cell>
+                <MetricsTable.Cell>
+                  {formatCurrency(metric.openingPrice)}
+                </MetricsTable.Cell>
+                <MetricsTable.Cell>
+                  {formatCurrency(metric.highPrice)}
+                </MetricsTable.Cell>
+                <MetricsTable.Cell>
+                  {formatCurrency(metric.lowPrice)}
+                </MetricsTable.Cell>
+              </MetricsTable.Row>
+            );
+          })}
+        </MetricsTable.Body>
+      </MetricsTable>
     </div>
   );
 };

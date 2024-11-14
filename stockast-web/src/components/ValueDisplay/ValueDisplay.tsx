@@ -24,7 +24,10 @@ const ValueDisplay = ({ value, originValue }: ValueDisplayProps) => {
 
   return (
     <div
-      className={clsx('flex items-baseline space-x-1 font-medium', getColor())}
+      className={clsx(
+        'flex items-baseline justify-end space-x-1 font-medium',
+        getColor()
+      )}
     >
       <p>{formatDifference()}</p>
       <p>({changeRate}%)</p>
