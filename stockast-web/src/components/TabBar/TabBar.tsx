@@ -24,18 +24,6 @@ const useTabBarContext = () => {
   return context;
 };
 
-const TabBarProvider = ({
-  selectedTab,
-  onTabChange,
-  children,
-}: TabBarProps) => {
-  return (
-    <TabBarContext.Provider value={{ selectedTab, onTabChange }}>
-      <div>{children}</div>
-    </TabBarContext.Provider>
-  );
-};
-
 const TabBar = ({
   children,
   selectedTab,
@@ -44,7 +32,7 @@ const TabBar = ({
   hasBackground = false,
 }: TabBarProps) => {
   return (
-    <TabBarProvider selectedTab={selectedTab} onTabChange={onTabChange}>
+    <TabBarContext.Provider value={{ selectedTab, onTabChange }}>
       <div
         className={clsx(
           'flex space-x-2',
@@ -54,7 +42,7 @@ const TabBar = ({
       >
         {children}
       </div>
-    </TabBarProvider>
+    </TabBarContext.Provider>
   );
 };
 
