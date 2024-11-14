@@ -1,8 +1,11 @@
-import React from 'react';
+import { InputHTMLAttributes, ReactNode } from 'react';
 
-export type TabBarProps = {
-  labels: string[];
-  labelColors: string[];
-  isSlideAnimation: boolean;
-  tabContents: React.ReactNode[];
-};
+export interface TabBarProps {
+  children: ReactNode;
+  selectedTab: number;
+  onTabChange: (index: number) => void;
+}
+
+export interface TabProps extends InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+}

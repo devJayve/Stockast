@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import TabBar from '../../components/tabBar/TabBar';
+import TabBar from '../../components/TabBar/TabBar';
 
 const labels: string[] = ['구매', '판매', '대기'];
 const labelColors: string[] = [
