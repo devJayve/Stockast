@@ -37,7 +37,7 @@ const TabBar = ({
         className={clsx(
           'flex space-x-2',
           hasUnderline && 'relative border-b border-neutral-400',
-          hasBackground && 'rounded-lg bg-neutral-800 p-1'
+          hasBackground && 'rounded-lg bg-neutral-700 p-1'
         )}
       >
         {children}
@@ -86,7 +86,7 @@ const UnderlineTab = ({ label, value }: TabProps) => {
 const InterfaceTab = ({
   label,
   value,
-  activeColor = `bg-neutral-600 text-white font-semibold`,
+  activeColor = `bg-neutral-200/20 text-white font-semibold`,
 }: TabProps) => {
   const { selectedTab, onTabChange } = useTabBarContext();
   const isActive = selectedTab == value;
@@ -94,7 +94,7 @@ const InterfaceTab = ({
   return (
     <button
       className={clsx(
-        'flex-grow rounded-lg py-2 text-center text-neutral-200 transition-colors',
+        'flex-1 rounded-lg py-2 text-center text-neutral-200 transition-colors',
         isActive && activeColor
       )}
       onClick={() => onTabChange(value)}
