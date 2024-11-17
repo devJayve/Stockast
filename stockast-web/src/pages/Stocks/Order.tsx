@@ -1,16 +1,12 @@
-import React, { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import TabBar from '../../components/TabBar/TabBar';
 import Divider from '../../components/Divder';
 import DropDown from '../../components/Dropdown';
 import Dropdown from '../../components/Dropdown';
 import useDropdown from '../../hooks/useDropdown';
-
-const labels: string[] = ['구매', '판매', '대기'];
-const labelColors: string[] = [
-  'text-stock-red',
-  'text-stock-blue',
-  'text-stock-green',
-];
+import ValueControl from '../../components/ValueControl/ValueControl';
+import { formatCurrency } from '../../utils/formatUtils';
+import clsx from 'clsx';
 
 const Order = () => {
   return (
@@ -39,13 +35,17 @@ const Order = () => {
 const InterfaceBlock = ({
   title,
   children,
+  className,
 }: {
   title: string;
   children: ReactNode;
+  className?: string;
 }) => {
   return (
     <tr>
-      <td className='w-[1%] whitespace-nowrap py-1.5 pr-2'>{title}</td>
+      <td className={clsx(className, 'w-[1%] whitespace-nowrap py-1.5 pr-2')}>
+        {title}
+      </td>
       <td className='py-1.5'>{children}</td>
     </tr>
   );
@@ -79,7 +79,23 @@ const OrderMode = () => {
 };
 
 const OrderQuantity = () => {
-  return <InterfaceBlock title='수량'>{<div>test</div>}</InterfaceBlock>;
+  const [selectedTab, setSelectedTab] = useState(null);
+  return (
+    <InterfaceBlock title='수량'>
+      {
+        <div className='w-full flex-col'>
+          <ValueControl />
+          <ValueControl />
+          {/*<TabBar selectedTab={selectedTab} onTabChange={setSelectedTab}>*/}
+          {/*  <TabBar.CircleTab value={0} label='10%' />*/}
+          {/*  <TabBar.CircleTab value={1} label='25%' />*/}
+          {/*  <TabBar.CircleTab value={2} label='50%' />*/}
+          {/*  <TabBar.CircleTab value={3} label='최대' />*/}
+          {/*</TabBar>*/}
+        </div>
+      }
+    </InterfaceBlock>
+  );
 };
 
 const OrderMethod = () => {
@@ -118,22 +134,26 @@ const PriceType = () => {
 
 const AvailableSeed = () => {
   return (
-    <InterfaceBlock title='구매 가능 금액'>
-      <p>0원</p>
+    <InterfaceBlock className='font-semibold' title='구매가능 금액'>
+      <p className='text-right font-semibold'>{formatCurrency(1000000)}</p>
     </InterfaceBlock>
   );
 };
 
 const TotalOrderPrice = () => {
   return (
-    <InterfaceBlock title='구매 가능 금액'>
-      <p>0원</p>
+    <InterfaceBlock className='font-semibold' title='총 주문 금액'>
+      <p className='text-right font-semibold'>0원</p>
     </InterfaceBlock>
   );
 };
 
 const PurchaseButton = () => {
-  return <div>구매하기</div>;
+  return (
+    <div className='rounded-xl bg-red-500 py-2 text-center font-medium'>
+      구매하기
+    </div>
+  );
 };
 
 export default Order;

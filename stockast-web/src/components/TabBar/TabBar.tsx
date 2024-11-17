@@ -52,10 +52,9 @@ const CircleTab = ({ label, value }: TabProps) => {
 
   return (
     <button
-      className={clsx(
-        'rounded-full px-3 py-1.5 text-neutral-200',
-        isActive && 'bg-neutral-800 font-semibold text-white'
-      )}
+      className={clsx('rounded-full px-3 py-1.5 text-neutral-200', {
+        'bg-neutral-800 font-semibold text-white': isActive,
+      })}
       onClick={() => onTabChange(value)}
     >
       {label}

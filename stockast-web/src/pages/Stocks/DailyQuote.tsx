@@ -1,43 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TabBar from '../../components/TabBar';
+import MetricsTable from '../../components/MetricsTable';
+
+interface RealtimePrice {
+  tradePrice: string; // 체결가 (예: '57,100원')
+  tradeVolume: number; // 체결량 (예: 14892)
+  changeRate: string; // 등락률 (예: '+0.17%')
+  accumulatedVolume: number; // 실시간 시세 (예: 13564588)
+}
+
+const realtimePriceDummy: RealtimePrice[] = [
+  {
+    tradePrice: '57,100원',
+    tradeVolume: 14892,
+    changeRate: '+0.17%',
+    accumulatedVolume: 13564588,
+  },
+  {
+    tradePrice: '58,000원',
+    tradeVolume: 10345,
+    changeRate: '-0.05%',
+    accumulatedVolume: 12500000,
+  },
+  {
+    tradePrice: '56,700원',
+    tradeVolume: 20340,
+    changeRate: '+0.25%',
+    accumulatedVolume: 14500000,
+  },
+  {
+    tradePrice: '57,500원',
+    tradeVolume: 17980,
+    changeRate: '-0.13%',
+    accumulatedVolume: 12345678,
+  },
+];
 
 const DailyQuote = () => {
+  const [selectedTab, setSelectedTab] = useState(0);
   return (
-    <div className='my-4 flex flex-col rounded-xl bg-neutral-850 p-4'>
+    <div className='my-4 flex flex-col rounded-xl bg-neutral-800 p-4'>
       <p className='font-semibold'>일별 실시간 시세</p>
-      <div className='my-2 flex w-full rounded-lg bg-neutral-700 py-1'>
-        <button className='flex-1'>실시간</button>
-        <button className='flex-1'>일별</button>
-      </div>
-      <div>
-        <table className='w-full space-y-1 text-right'>
-          <tbody>
-            <tr className='border-b-0.5 border-neutral-500 text-sm text-neutral-300'>
-              <th className='w-[25%] py-2 text-left font-light'>체결가</th>
-              <th className='w-[25%] font-light'>체결량</th>
-              <th className='w-[25%] font-light'>등락률</th>
-              <th className='w-[25%] font-light'>거래량</th>
-            </tr>
-          </tbody>
-          <SingleQuoteTile />
-          <SingleQuoteTile />
-          <SingleQuoteTile />
-          <SingleQuoteTile />
-        </table>
-      </div>
-    </div>
-  );
-};
+      <TabBar
+        onTabChange={setSelectedTab}
+        selectedTab={selectedTab}
+        hasBackground={true}
+      >
+        <TabBar.InterfaceTab value={0} label='실시간' />
+        <TabBar.InterfaceTab value={1} label='실시간' />
+      </TabBar>
 
-const SingleQuoteTile = () => {
-  return (
-    <tbody>
-      <tr className='text-sm text-neutral-300'>
-        <td className='py-1 text-left'>57,100원</td>
-        <td>14,892</td>
-        <td className='text-red-500'>+0.17%</td>
-        <td>13,564,588</td>
-      </tr>
-    </tbody>
+      <MetricsTable>
+        <MetricsTable.Header>
+          <MetricsTable.Column>체결가</MetricsTable.Column>
+          <MetricsTable.Column>체결량</MetricsTable.Column>
+          <MetricsTable.Column>등락률</MetricsTable.Column>
+          <MetricsTable.Column>거래량</MetricsTable.Column>
+        </MetricsTable.Header>
+        <MetricsTable.Body>
+          {realtimePriceDummy.map((price, index) => (
+            <MetricsTable.Row key={index}>
+              <MetricsTable.Cell>{price.tradePrice}</MetricsTable.Cell>
+              <MetricsTable.Cell>{price.tradeVolume}</MetricsTable.Cell>
+              <MetricsTable.Cell>{price.changeRate}</MetricsTable.Cell>
+              <MetricsTable.Cell>{price.accumulatedVolume}</MetricsTable.Cell>
+            </MetricsTable.Row>
+          ))}
+        </MetricsTable.Body>
+      </MetricsTable>
+    </div>
   );
 };
 

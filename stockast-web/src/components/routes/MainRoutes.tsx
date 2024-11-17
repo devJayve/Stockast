@@ -15,6 +15,10 @@ import Stocks from '../../pages/Stocks';
 import NotFound from '../../pages/NotFound';
 import { authUser } from '../../api/userApi';
 import Test from '../../pages/Test';
+import SidebarLayout from '../../layouts/SidebarLayout';
+import Profit from '../../pages/Profit';
+import Orders from '../../pages/Orders';
+import Transaction from '../../pages/Transaction';
 
 const MainRoutes = () => {
   const isDevMode = process.env.NODE_ENV === 'development';
@@ -40,9 +44,15 @@ const MainRoutes = () => {
         <Route element={<Layout />}>
           {isDevMode && <Route path='/test' element={<Test />} />}
           <Route path='/' element={<Home />} />
-          <Route path='/account' element={<Account />} />
           <Route path='/stocks/:stockId' element={<Stocks />} />
           <Route path='*' element={<NotFound />} />
+        </Route>
+        {/*내 계좌 사이드바에 해당하는 경로*/}
+        <Route element={<SidebarLayout />}>
+          <Route path='/account/asset' element={<Account />} />
+          <Route path='/account/transaction' element={<Transaction />} />
+          <Route path='/account/orders' element={<Orders />} />
+          <Route path='/account/profit' element={<Profit />} />
         </Route>
         <Route element={<NonFooterLayout />}></Route>
       </Route>

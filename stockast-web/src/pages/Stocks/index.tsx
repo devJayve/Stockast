@@ -28,6 +28,7 @@ const Stocks = () => {
 
     setWidth(newWidth);
   }
+
   function handleMouseUp() {
     setIsResizing(false);
   }
@@ -72,7 +73,7 @@ const ResizedLayout = ({
         <DailyQuote />
       </div>
       <div
-        className='w-1 cursor-col-resize bg-blue-500'
+        className='w-1 cursor-col-resize hover:bg-blue-500'
         onMouseDown={handleMouseDown}
       ></div>
       <div className='flex-grow'>
