@@ -1,7 +1,8 @@
 import React from 'react';
+import HistoryList from '../../components/HistoryList';
 
 const Profit = () => {
-  return <div>수익 페이지</div>;
+  return <div></div>;
 };
 
 export default Profit;

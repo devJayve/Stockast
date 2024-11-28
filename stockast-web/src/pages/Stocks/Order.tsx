@@ -10,7 +10,7 @@ import clsx from 'clsx';
 
 const Order = () => {
   return (
-    <div className='flex-col space-y-3 rounded-xl bg-neutral-800 p-5'>
+    <div className='flex w-full flex-col space-y-3 rounded-xl bg-neutral-800 p-5'>
       <p className='text-lg font-semibold'>주문하기</p>
       <table className='w-full'>
         <tbody>

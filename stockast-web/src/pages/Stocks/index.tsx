@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import StockHeader from './StockHeader';
-import StockGraph from './StockGraph';
+import StockChart from './StockChart';
 import DailyQuote from './DailyQuote';
 import Order from './Order';
 
@@ -68,15 +68,17 @@ const ResizedLayout = ({
 }) => {
   return (
     <div className='flex flex-grow'>
-      <div className='flex-col' style={{ width: `${width}%` }}>
-        <StockGraph />
+      <div className='flex flex-col' style={{ width: `${width}%` }}>
+        <StockChart />
         <DailyQuote />
       </div>
+      {/*인터페이스 리사이즈 바*/}
       <div
         className='w-1 cursor-col-resize hover:bg-blue-500'
         onMouseDown={handleMouseDown}
-      ></div>
-      <div className='flex-grow'>
+      />
+      {/*주문 인터페이스*/}
+      <div className='flex flex-grow'>
         <Order />
       </div>
     </div>

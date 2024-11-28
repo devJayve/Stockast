@@ -1,7 +1,12 @@
 import React from 'react';
+import HistoryList from '../../components/HistoryList';
 
 const Transaction = () => {
-  return <div>거래 내역 페이지</div>;
+  return (
+    <div>
+      <HistoryList />
+    </div>
+  );
 };
 
 export default Transaction;

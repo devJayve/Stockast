@@ -39,7 +39,7 @@ const realtimePriceDummy: RealtimePrice[] = [
 const DailyQuote = () => {
   const [selectedTab, setSelectedTab] = useState(0);
   return (
-    <div className='my-4 flex flex-col rounded-xl bg-neutral-800 p-4'>
+    <div className='flex flex-1 flex-col rounded-xl bg-neutral-800 p-4'>
       <p className='font-semibold'>일별 실시간 시세</p>
       <TabBar
         onTabChange={setSelectedTab}
