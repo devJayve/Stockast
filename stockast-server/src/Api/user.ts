@@ -1,28 +1,23 @@
-import { Request, Response } from "express";
-import handleResponse from "../utils/handleResponse";
+// Import RequestHandler for explicit typing
+import { Request, Response, RequestHandler } from "express";
 import UserModel from "../models/User.models";
 import UserType from "../types/User.types";
 import jwt from "jsonwebtoken";
 
 // 로그인 및 회원가입 (구글)
-const loginGoogleUser = async (req: Request, res: Response) => {
+const loginGoogleUser: RequestHandler = async (req, res, next) => {
   try {
     const { uid } = req.body as { uid: string };
 
     // 유저 조회 및 생성 처리
-    let user = handleResponse(
-      await UserModel.findByUid(uid),
-      res,
-    ) as UserType | null;
+    let user = (await UserModel.findByUid(uid)) as UserType | null;
     if (!user) {
-      user = handleResponse(
-        await UserModel.create(req.body),
-        res,
-      ) as UserType | null;
+      user = await UserModel.create(req.body);
     }
 
     if (!user) {
-      return res.status(500).json({ message: "User creation failed" });
+      res.status(500).json({ message: "User creation failed" });
+      return;
     }
 
     // JWT 토큰 생성
@@ -31,35 +26,39 @@ const loginGoogleUser = async (req: Request, res: Response) => {
       process.env.JWT_SECRET as string,
       {
         expiresIn: "12h",
-      },
+      }
     );
 
-    return res.status(200).json({ user, accessToken });
+    res.status(200).json({ user, accessToken });
   } catch (error) {
     console.error("Error in /login/google:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-const logoutUser = async (req: Request, res: Response) => {
+const logoutUser: RequestHandler = async (req, res, next) => {
   try {
     res.clearCookie("session");
-    return res.status(200);
+    res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
-    return res.status(500);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
-const authUser = async (req: Request, res: Response) => {
-  const user = (req as any).user as UserType;
-  return res.json({
-    uid: user.uid,
-    displayName: user.displayName,
-    email: user.email,
-    phoneNumber: user.phoneNumber,
-    photoURL: user.photoURL,
-    providerId: user.providerId,
-  });
+const authUser: RequestHandler = async (req, res, next) => {
+  try {
+    const user = (req as any).user as UserType;
+    res.json({
+      uid: user.uid,
+      displayName: user.displayName,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      photoURL: user.photoURL,
+      providerId: user.providerId,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
 
 export { loginGoogleUser, logoutUser, authUser };

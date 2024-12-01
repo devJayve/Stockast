@@ -4,6 +4,7 @@ import path from "path";
 import admin from "firebase-admin";
 import dotenv from "dotenv";
 import usersRouter from "./routes/userRouter";
+import stockRouter from "./routes/stockRouter";
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ const port = process.env.PORT;
 // 환경 변수 검증
 if (!serviceAccountPath) {
   throw new Error(
-    "SERVICE_ACCOUNT_PATH is not defined in environment variables",
+    "SERVICE_ACCOUNT_PATH is not defined in environment variables"
   );
 }
 if (!port) {
@@ -35,6 +36,7 @@ app.use(cors());
 
 // 라우터 등록
 app.use("/user", usersRouter);
+app.use("/stock", stockRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
