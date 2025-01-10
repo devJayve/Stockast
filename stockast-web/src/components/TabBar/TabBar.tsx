@@ -46,15 +46,20 @@ const TabBar = ({
   );
 };
 
-const CircleTab = ({ label, value }: TabProps) => {
+const CircleTab = ({ label, value, className }: TabProps) => {
   const { selectedTab, onTabChange } = useTabBarContext();
   const isActive = selectedTab == value;
 
   return (
     <button
-      className={clsx('rounded-full px-3 py-1.5 text-neutral-200', {
-        'bg-neutral-800 font-semibold text-white': isActive,
-      })}
+      type='button'
+      className={clsx(
+        'rounded-full px-3 py-1.5 text-neutral-200',
+        {
+          'bg-neutral-800 font-semibold text-white': isActive,
+        },
+        className
+      )}
       onClick={() => onTabChange(value)}
     >
       {label}
@@ -68,6 +73,7 @@ const UnderlineTab = ({ label, value }: TabProps) => {
 
   return (
     <button
+      type='button'
       className={clsx(
         'relative py-2 text-center text-neutral-200',
         isActive && 'font-semibold'
@@ -92,6 +98,7 @@ const InterfaceTab = ({
 
   return (
     <button
+      type='button'
       className={clsx(
         'flex-1 rounded-lg py-2 text-center text-neutral-200 transition-colors',
         isActive && activeColor

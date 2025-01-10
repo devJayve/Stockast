@@ -1,11 +1,11 @@
 import { getConnection } from "./Database";
 import UserType from "./../types/User.types";
-import Response from "./../types/Response.types";
+import Response, { ResponseFormat } from "../types/ResponseFormat";
 
 const UserModel = {
-  findByUid: async (uid: string): Promise<Response<UserType>> => {
+  findByUid: async (uid: string): Promise<ResponseFormat<UserType>> => {
     let conn = null;
-    const res: Response<UserType> = {
+    const res: ResponseFormat<UserType> = {
       success: false,
       message: "",
       result: null,
@@ -18,7 +18,12 @@ const UserModel = {
 
       res.success = true;
       res.message = "Success";
-      res.result = rows[0] as UserType;
+
+      if (rows.length == 0) {
+        res.result = null;
+      } else {
+        res.result = rows[0] as UserType;
+      }
     } catch (error) {
       console.error("Error in findByUid:", error);
       res.message = "Error retrieving user";
@@ -28,10 +33,10 @@ const UserModel = {
     return res;
   },
 
-  create: async (userData: UserType): Promise<Response<UserType>> => {
+  create: async (userData: UserType): Promise<ResponseFormat<UserType>> => {
     // 반환 타입 지정
     let conn = null;
-    const res: Response<UserType> = {
+    const res: ResponseFormat<UserType> = {
       // 응답 타입 지정
       success: false,
       message: "",
@@ -64,6 +69,7 @@ const UserModel = {
       res.result = user;
     } catch (error) {
       console.error("Error in create:", error);
+      res.success = false;
       res.message = "Error creating user";
     } finally {
       if (conn) conn.release();

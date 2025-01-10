@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import StockHeader from './StockHeader';
 import StockChart from './StockChart';
 import DailyQuote from './DailyQuote';
-import Order from './Order';
+import Order from './Order/Order';
 
 const Stocks = () => {
   const { stockId } = useParams();
@@ -68,7 +68,7 @@ const ResizedLayout = ({
 }) => {
   return (
     <div className='flex flex-grow'>
-      <div className='flex flex-col' style={{ width: `${width}%` }}>
+      <div className='flex flex-col space-y-1' style={{ width: `${width}%` }}>
         <StockChart />
         <DailyQuote />
       </div>

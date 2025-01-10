@@ -1,4 +1,4 @@
-export interface Response<T> {
+export interface ResponseFormat<T> {
   success: boolean;
   message: string;
   result: T | null;

@@ -8,4 +8,5 @@ export interface TabBarProps {
 
 export interface TabProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
+  className?: string;
 }

@@ -5,8 +5,11 @@ import admin from "firebase-admin";
 import dotenv from "dotenv";
 import usersRouter from "./routes/userRouter";
 import stockRouter from "./routes/stockRouter";
+import { AppDataSource } from "./config/database";
 
 dotenv.config();
+
+// AppDataSource.initialize();
 
 // 환경 변수 타입 정의
 const serviceAccountPath = process.env.SERVICE_ACCOUNT_PATH;
@@ -15,7 +18,7 @@ const port = process.env.PORT;
 // 환경 변수 검증
 if (!serviceAccountPath) {
   throw new Error(
-    "SERVICE_ACCOUNT_PATH is not defined in environment variables"
+    "SERVICE_ACCOUNT_PATH is not defined in environment variables",
   );
 }
 if (!port) {

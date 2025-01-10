@@ -1,8 +1,8 @@
-// Import RequestHandler for explicit typing
 import { Request, Response, RequestHandler } from "express";
 import UserModel from "../models/User.models";
 import UserType from "../types/User.types";
 import jwt from "jsonwebtoken";
+import { ResponseFormat } from "../types/ResponseFormat";
 
 // 로그인 및 회원가입 (구글)
 const loginGoogleUser: RequestHandler = async (req, res, next) => {
@@ -10,7 +10,14 @@ const loginGoogleUser: RequestHandler = async (req, res, next) => {
     const { uid } = req.body as { uid: string };
 
     // 유저 조회 및 생성 처리
-    let user = (await UserModel.findByUid(uid)) as UserType | null;
+    const response = (await UserModel.findByUid(
+      uid,
+    )) as ResponseFormat<UserType | null>;
+    let user = response.result;
+
+    console.log("user : ", user);
+    console.log(user?.uid);
+
     if (!user) {
       user = await UserModel.create(req.body);
     }
@@ -21,13 +28,9 @@ const loginGoogleUser: RequestHandler = async (req, res, next) => {
     }
 
     // JWT 토큰 생성
-    const accessToken = jwt.sign(
-      { uid: user.uid },
-      process.env.JWT_SECRET as string,
-      {
-        expiresIn: "12h",
-      }
-    );
+    const accessToken = jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, {
+      expiresIn: "12h",
+    });
 
     res.status(200).json({ user, accessToken });
   } catch (error) {
@@ -48,6 +51,14 @@ const logoutUser: RequestHandler = async (req, res, next) => {
 const authUser: RequestHandler = async (req, res, next) => {
   try {
     const user = (req as any).user as UserType;
+
+    console.log("user:", user);
+
+    if (!user) {
+      res.status(400).send("UserModels is not exist");
+      return;
+    }
+
     res.json({
       uid: user.uid,
       displayName: user.displayName,
@@ -57,6 +68,7 @@ const authUser: RequestHandler = async (req, res, next) => {
       providerId: user.providerId,
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
